@@ -60,7 +60,7 @@
 
 ### 3. 设置浏览器自动保存下载文件，如下图设置 **`必须`**
 
-![第四步](https://s2.loli.net/2022/12/03/OIKVLXd3CcihRuY.png))
+![第四步](https://s2.loli.net/2022/12/03/OIKVLXd3CcihRuY.png)
 
 ### 4. 打开亚马逊的业务报告下载页面即可使用
 

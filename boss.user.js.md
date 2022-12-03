@@ -10,7 +10,7 @@
 >
 > 创建这个章节的目的在于为我节省时间，而不是反复地解释一些琐碎的安装使用问题，如果您已经认真检索过本章节的内容，确认没有符合的 FAQ 能帮到您，
 >
-> 请通过 [Facebook](https://www.facebook.com/MaiXiaoMeng) 邮箱联系我，这是能和我直接对话的最有效方法
+> 请通过 [Facebook](https://www.facebook.com/MaiXiaoMeng) 联系我，这是能和我直接对话的最有效方法
 >
 > 最后，祝大家早日找到好工作！！！就酱紫
 
