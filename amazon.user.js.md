@@ -77,7 +77,9 @@ A: 允许浏览器同时下载多个文件，注意页面提示
 A: 配置 Tampermonkey 接管浏览器是下载事件
 
 > 收到比较多的反馈说脚本无法正常下载的问题，即点击批量下载按钮的时候页面哗啦啦的提示下载，但实质上是没有在下载，看了保存的目录里面也没有
+>
 > 这个问题主要出现在使用 Tampermonkey 作为脚本管理器的谷歌浏览器上，如果你在使用 Tampermonkey 的时候出现提示业务报告下载了却无法的情况下，请安照以下教程进行配置 Tampermonkey 接管下载事件
+>
 > 如果还不行就把 Tampermonkey 换成 Violentmonkey，实在不行就换浏览器 Chrome 、Edge 和 Firefox，上面的方法都试过了不行就通过 [Facebook](https://www.facebook.com/MaiXiaoMeng) 联系我
 
 ![配置脚本管理器接管下载事件](https://s2.loli.net/2022/12/07/m5dWk791plzZEhQ.jpg)
