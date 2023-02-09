@@ -8,7 +8,6 @@
 
 // @match        https://*.amazon.com/*
 // @match        https://*.amazon.co.uk/*
-// @match        https://*.amazon.co.de/*
 // @match        https://*.amazon.fr/*
 // @match        https://*.amazon.it/*
 // @match        https://*.amazon.es/*
@@ -38,6 +37,7 @@
 
 // @resource     element-plus    https://unpkg.com/element-plus/dist/index.css
 
+// @note         0.0.8 [Amazon] 修复 业务报告 修复个别 日本站 不显示下载按钮的问题 
 // @note         0.0.7 [Amazon] 新增 业务报告 支持按每天或者每月下载
 // @note         0.0.6 [Amazon] 新增 业务报告 自动获取业务报告的全部字段
 // @note         0.0.5 [Amazon] 新增 库存管理 显示库存管理产品的分类
@@ -70,7 +70,7 @@ var version_url = "https://greasyfork.org/zh-CN/scripts/449460"
 // 初始化脚本
 initializationScript()
 // [Amazon] 业务报告 | 详情页面销售和流量
-waitForKeyElements('.css-1lafdix', '*', ['business-reports/'], false, false, (node, selector_txt, active_host, active_url) => {
+waitForKeyElements('.css-1lafdix', '*', ['business-reports'], false, false, (node, selector_txt, active_host, active_url) => {
     if (GM_getValue('menu_amazon')) {
         if (node.attr('class').indexOf('business_report') == -1) {
             node.after($(`<div class="css-1lafdix business_report"><kat-button id='business_month' label="批量下载[月](.csv)" variant="primary" size="base" type="button"></kat-button></div> <div class="css-ix5zus"><kat-link label="" class="css-4g6ai3"></kat-link></div>`))
@@ -155,7 +155,7 @@ waitForKeyElements('.css-1lafdix', '*', ['business-reports/'], false, false, (no
     }
 })
 // [Amazon] 管理库存 | 显示管理库存产品的分类
-waitForKeyElements('.myi-sprite-container.myi-image > a', '*', ['inventory/'], false, false, (node, selector_txt, active_host, active_url) => {
+waitForKeyElements('.myi-sprite-container.myi-image > a', '*', ['inventory'], false, false, (node, selector_txt, active_host, active_url) => {
     var grab_node = node.attr('href').split('&')[2].replace('productType=', '');
     node.parent().after($(`<div><div><span style="color:#00F;font-size: initial;">${grab_node}</span></div>`))
 })
