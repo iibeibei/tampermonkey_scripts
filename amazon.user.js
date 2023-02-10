@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         亚马逊批量下载业务报告
 // @namespace    https://github.com/MaiXiaoMeng
-// @version      0.0.7
+// @version      0.0.8
 // @description  垃圾亚马逊，连批量下载业务报告的方法都没有，只好自己写一个了
 // @author       XiaoMeng Mai
 // @license      GPLv3
