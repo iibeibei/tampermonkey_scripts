@@ -31,8 +31,8 @@
 // @require      https://unpkg.com/jquery
 // @require      https://unpkg.com/moment
 // @require      https://unpkg.com/sweetalert2
-// @require      http://127.0.0.1:5500/贝贝脚本的通用方法.user.js
-// @require      https://greasyfork.org/scripts/448161/code/贝贝脚本的通用方法.js?version=1159841
+// @require      http://127.0.0.1:5500/贝贝脚本的通用方法.js
+// @require      https://cdn.jsdelivr.net/gh/MaiXiaoMeng/tampermonkey_scripts@master/贝贝脚本的通用方法.js
 
 // @resource     element-plus    https://unpkg.com/element-plus/dist/index.css
 
