@@ -2,7 +2,7 @@
 // @name         贝贝脚本的通用方法
 // @namespace    https://github.com/MaiXiaoMeng
 // @version      0.0.3
-// @description  贝贝脚本的通用方法
+// @description  IMPORTANT: This function requires your script to have loaded jQuery.
 // @author       XiaoMeng Mai
 // @license      GPLv3
 // @match        *://*/*
