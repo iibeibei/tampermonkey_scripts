@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         贝贝脚本的通用方法
 // @namespace    https://github.com/MaiXiaoMeng
-// @version      0.0.2
+// @version      0.0.3
 // @description  贝贝脚本的通用方法
 // @author       XiaoMeng Mai
 // @license      GPLv3
