@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beibei.js
 // @namespace    https://github.com/MaiXiaoMeng
-// @version      0.0.6
+// @version      0.0.7
 // @description  IMPORTANT: This function requires your script to have loaded jQuery.
 // @author       XiaoMeng Mai
 // @license      GPLv3
@@ -113,7 +113,7 @@ function logPrint(params) {
 function sleep(interval) {
     return new Promise(resolve => { setTimeout(resolve, interval) })
 }
-function loadMenu(menu_ALL) {
+function loadMenu(menu_ALL, version_url) {
     var menu_ID = []
 
     // 如果读取到的值为 null 就写入默认值
