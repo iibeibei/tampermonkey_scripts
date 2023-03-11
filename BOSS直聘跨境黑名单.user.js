@@ -31,7 +31,6 @@
 // @require      https://unpkg.com/jquery
 // @require      https://unpkg.com/moment
 // @require      https://unpkg.com/sweetalert2
-// @require      http://127.0.0.1:5500/%E8%B4%9D%E8%B4%9D%E8%84%9A%E6%9C%AC%E7%9A%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95.js
 // @require      https://greasyfork.org/scripts/448161-beibei-js/code/Beibeijs.js?version=1159976
 
 // @resource     element-plus    https://unpkg.com/element-plus/dist/index.css
@@ -40,6 +39,8 @@
 // @note         0.1.5 修复 BOSS直聘 搜索页改版不显示的问题
 // @note         0.1.4 修复 BOSS直聘 详情页改版不显示的问题
 // ==/UserScript==
+
+// @require      http://127.0.0.1:5500/贝贝脚本的通用方法.js
 
 // append() - 在被选元素的结尾插入内容（内容的结尾，比如说有个a标签，则是在</a>这个标签之前添加东西） <a>    [append]</a>
 // prepend() - 在被选元素的开头插入内容（内容的开始，比如说有个a标签，则是在<a>这个标签之后添加东西） <a>[prepend]   </a>
