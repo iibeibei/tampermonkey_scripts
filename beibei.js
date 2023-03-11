@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Beibei.js
 // @namespace    https://github.com/MaiXiaoMeng
-// @version      0.0.4
+// @version      0.0.5
 // @description  IMPORTANT: This function requires your script to have loaded jQuery.
 // @author       XiaoMeng Mai
 // @license      GPLv3
