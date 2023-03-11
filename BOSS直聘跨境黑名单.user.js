@@ -31,8 +31,8 @@
 // @require      https://unpkg.com/jquery
 // @require      https://unpkg.com/moment
 // @require      https://unpkg.com/sweetalert2
-// @require      http://127.0.0.1:5500/贝贝脚本的通用方法.js
-// @require      https://cdn.jsdelivr.net/gh/MaiXiaoMeng/tampermonkey_scripts/贝贝脚本的通用方法.js
+// @require      http://127.0.0.1:5500/%E8%B4%9D%E8%B4%9D%E8%84%9A%E6%9C%AC%E7%9A%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95.js
+// @require      https://greasyfork.org/scripts/448161-beibei-js/code/Beibeijs.js?version=1159976
 
 // @resource     element-plus    https://unpkg.com/element-plus/dist/index.css
 
