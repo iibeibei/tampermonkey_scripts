@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BOSS 直聘 跨境黑名单
 // @namespace    https://github.com/MaiXiaoMeng
-// @version      0.2.0
+// @version      0.2.1
 // @description  可以在 BOSS 直聘、智联招聘、前程无忧 上 显示 若比邻的 黑名单，应 Facebook 群友要求，分享一下 祝大家早日找到好工作
 // @author       XiaoMeng Mai
 // @license      GPLv3
@@ -22,6 +22,7 @@
 // @grant        GM_getValue
 // @grant        GM_registerMenuCommand
 // @grant        GM_unregisterMenuCommand
+// @grant        GM_notification
 // @grant        unsafeWindow
 
 // @compatible   firefox Tampermonkey
