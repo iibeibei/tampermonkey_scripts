@@ -5,6 +5,7 @@
 // @description  贝贝脚本的通用方法
 // @author       XiaoMeng Mai
 // @license      GPLv3
+// @match        *://*/*
 // ==/UserScript==
 
 /**
