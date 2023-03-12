@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BOSS 直聘 跨境黑名单
 // @namespace    https://github.com/MaiXiaoMeng
-// @version      0.2.5
+// @version      0.2.6
 // @description  可以在 BOSS 直聘、智联招聘、前程无忧 上 显示 若比邻的 黑名单，应 Facebook 群友要求，分享一下 祝大家早日找到好工作
 // @author       XiaoMeng Mai
 // @license      GPLv3
@@ -36,6 +36,7 @@
 
 // @resource     element-plus    https://unpkg.com/element-plus/dist/index.css
 
+// @note         0.2.6 修复 BOSS直聘 所有页面都在新标签打开
 // @note         0.2.0 修复 BOSS直聘 聊天页改版不显示的问题
 // @note         0.1.5 修复 BOSS直聘 搜索页改版不显示的问题
 // @note         0.1.4 修复 BOSS直聘 详情页改版不显示的问题
@@ -85,7 +86,7 @@ function actionFunction(node, selector_txt, active_host, active_url, js_code) {
                 var response_text = $(response.responseText)
                 var hyperlink = response_text.find('.ap-questions-hyperlink').attr('href')
                 var result = (hyperlink == undefined) ? ['#00F', blacklist_search, '去搜索一下'] : ['#F00', hyperlink, '若比邻黑名单']
-                var insert_html = `<a class="beibei" style="color:${result[0]}" href='${result[1]}'>&nbsp ${result[2]} &nbsp</a>`
+                var insert_html = `<a class="beibei" target="_blank" style="color:${result[0]}" href='${result[1]}'>&nbsp ${result[2]} &nbsp</a>`
                 eval(js_code)
             }
         })()
