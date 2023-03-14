@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BOSS 直聘 跨境黑名单
 // @namespace    https://github.com/MaiXiaoMeng
-// @version      0.2.6
+// @version      0.2.7
 // @description  可以在 BOSS 直聘、智联招聘、前程无忧 上 显示 若比邻的 黑名单，应 Facebook 群友要求，分享一下 祝大家早日找到好工作
 // @author       XiaoMeng Mai
 // @license      GPLv3
@@ -36,6 +36,7 @@
 
 // @resource     element-plus    https://unpkg.com/element-plus/dist/index.css
 
+// @note         0.2.7 修复 BOSS直聘 职位页面错误显示的问题
 // @note         0.2.6 修复 BOSS直聘 所有页面都在新标签打开
 // @note         0.2.0 修复 BOSS直聘 聊天页改版不显示的问题
 // @note         0.1.5 修复 BOSS直聘 搜索页改版不显示的问题
@@ -52,13 +53,13 @@ var version_url = 'https://greasyfork.org/zh-CN/scripts/448162'
 var menu_ALL = [
     ['menu_amazon', 'Amazon', 'Amazon', true],
 ]
-initializationScript()
+// initializationScript()
 loadMenu(menu_ALL, version_url)
 
 // BOSS 直聘
 waitForKeyElements('.company-info > h3 > a', 'zhipin.com', ['/web/geek'], false, false, 'node.after($(insert_html))', actionFunction)
 waitForKeyElements('.level-list > .company-name', 'zhipin.com', ['/job_detail'], false, false, 'node.append($(insert_html))', actionFunction)
-waitForKeyElements('.company-info > a:nth-child(2)', 'zhipin.com', ['/job_detail'], false, false, 'node.append($(insert_html))', actionFunction)
+waitForKeyElements('a[ka="job-detail-company_custompage"]', 'zhipin.com', ['/job_detail'], false, false, 'node.append($(insert_html))', actionFunction)
 waitForKeyElements('.base-info.fl > span:nth-child(2)', 'zhipin.com', ['/web/geek'], false, false, 'node.append($(insert_html))', actionFunction)
 waitForKeyElements('.name-box > span:nth-child(2)', 'zhipin.com', ['/web/geek'], false, false, 'node.append($(insert_html))', actionFunction)
 waitForKeyElements('.info-primary > .info > .name', 'zhipin.com', ['/gongsi'], false, false, 'node.append($(insert_html))', actionFunction)
@@ -78,8 +79,8 @@ function actionFunction(node, selector_txt, active_host, active_url, js_code) {
         (async () => {
             var node_class = node.attr('class')
             if (node_class == undefined || node_class.indexOf('beibei') == -1 && node_class.indexOf('base-title') == -1) {
-                var company_replace = ['...', '公司名称', '企业名称：']
-                var company_name = node.text().split('  ')[0]
+                var company_replace = ['\n', '\r', '...', '公司名称', '企业名称：']
+                var company_name = node.text()
                 for (x in company_replace) { company_name = company_name.replace(company_replace[x], '').trim() }
                 var blacklist_search = `https://kjrate.com/?s=${company_name}&post_type=question`
                 var response = await makeGetRequest(blacklist_search)
