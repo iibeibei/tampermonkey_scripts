@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BOSS 直聘 跨境黑名单
 // @namespace    https://github.com/iibeibei
-// @version      0.2.8
+// @version      0.2.9
 // @description  可以在 BOSS 直聘、智联招聘、前程无忧 上 显示 若比邻的 黑名单，应 Facebook 群友要求，分享一下 祝大家早日找到好工作
 // @author       Beibei
 // @license      GPLv3
@@ -33,10 +33,12 @@
 // @require      https://unpkg.com/jquery
 // @require      https://unpkg.com/moment
 // @require      https://unpkg.com/sweetalert2
+// @require      https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js
 // @require      https://update.greasyfork.org/scripts/448161/1362731/Beibeijs.js
 
 // @resource     element-plus    https://unpkg.com/element-plus/dist/index.css
 
+// @note         0.2.9 新加 BOSS直聘 刨了小红书tzy大佬的, 添加岗位最近编辑时间
 // @note         0.2.8 修复 BOSS直聘 更新新的若比邻网站
 // @note         0.2.7 修复 BOSS直聘 职位页面错误显示的问题
 // @note         0.2.6 修复 BOSS直聘 所有页面都在新标签打开
@@ -75,6 +77,25 @@ waitForKeyElements('.tHCopName > H1', '51job.com', ['/all'], false, false, 'node
 waitForKeyElements('.com_name  > p', '51job.com', ['/'], false, false, 'node.append($(insert_html))', actionFunction);
 
 function actionFunction(node, selector_txt, active_host, active_url, js_code) {
+	if (selector_txt == '.company-info > h3 > a') {
+		parent_ka = node.parent().parent().parent().parent().parent().attr('ka');
+		parent_id = parent_ka.replace('search_list_', '');
+
+		data_list = JSON.parse(boss_joblist_res);
+		job_list = data_list?.zpData?.jobList;
+		job_list.forEach((item) => {
+			const { itemId, lastModifyTime } = item;
+			if (parent_id == itemId) {
+				time = dayjs(lastModifyTime).format('YYYY-MM-DD HH:mm:ss');
+				parent_div = `<div class="__boss_time_tag" style="position: absolute;right: 0;top: 0;background: rgba(229, 248, 248); \
+                color: #00a6a7;padding: 0 8px;font-size: 14px;border-radius: 0 0 0 4px;">编辑: ${time}</div>`;
+				$(`li[ka="${parent_ka}"]`).append($(parent_div));
+			}
+		});
+		// parent_div = `<div class="__zhipin_time_tag" style="position: absolute;right: 0;top: 0;background: #426eff; \
+		// color: white;padding: 0 8px;font-size: 14px;border-radius: 0 0 0 4px;">最近编辑:${time}</div>`;
+	}
+
 	if (GM_getValue('menu_amazon')) {
 		(async () => {
 			var node_class = node.attr('class');
@@ -96,3 +117,20 @@ function actionFunction(node, selector_txt, active_host, active_url, js_code) {
 		})();
 	}
 }
+
+var boss_joblist_res = '';
+const xhrOpen = XMLHttpRequest.prototype.open;
+XMLHttpRequest.prototype.open = function () {
+	const xhr = this;
+	if (arguments[1].indexOf('wapi/zpgeek/search/joblist.json') > -1) {
+		const getter = Object.getOwnPropertyDescriptor(XMLHttpRequest.prototype, 'responseText').get;
+		Object.defineProperty(xhr, 'responseText', {
+			get: () => {
+				let result = getter.call(xhr);
+				boss_joblist_res = result;
+				return result;
+			},
+		});
+	}
+	return xhrOpen.apply(xhr, arguments);
+};
