@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BOSS 直聘 跨境黑名单
-// @namespace    https://github.com/iibeibei
-// @version      0.2.7
+// @namespace    https://github.com/MaiXiaoMeng
+// @version      0.2.8
 // @description  可以在 BOSS 直聘、智联招聘、前程无忧 上 显示 若比邻的 黑名单，应 Facebook 群友要求，分享一下 祝大家早日找到好工作
 // @author       Beibei
 // @license      GPLv3
@@ -11,6 +11,7 @@
 // @match        https://*.51job.com/*
 
 // @connect      kjrate.com
+// @connect      kjxb.org
 
 // @grant        GM_info
 // @grant        GM_xmlhttpRequest
@@ -32,10 +33,11 @@
 // @require      https://unpkg.com/jquery
 // @require      https://unpkg.com/moment
 // @require      https://unpkg.com/sweetalert2
-// @require      https://greasyfork.org/scripts/448161-beibei-js/code/Beibeijs.js
+// @require      https://update.greasyfork.org/scripts/448161/1362731/Beibeijs.js
 
 // @resource     element-plus    https://unpkg.com/element-plus/dist/index.css
 
+// @note         0.2.8 修复 BOSS直聘 更新新的若比邻网站
 // @note         0.2.7 修复 BOSS直聘 职位页面错误显示的问题
 // @note         0.2.6 修复 BOSS直聘 所有页面都在新标签打开
 // @note         0.2.0 修复 BOSS直聘 聊天页改版不显示的问题
@@ -82,7 +84,8 @@ function actionFunction(node, selector_txt, active_host, active_url, js_code) {
 				for (x in company_replace) {
 					company_name = company_name.replace(company_replace[x], '').trim();
 				}
-				var blacklist_search = `https://kjrate.com/?s=${company_name}&post_type=question`;
+				var blacklist_search = `https://kjxb.org/?s=${company_name}&post_type=question`;
+				// var blacklist_search = `https://kjrate.com/?s=${company_name}&post_type=question`;
 				var response = await makeGetRequest(blacklist_search);
 				var response_text = $(response.responseText);
 				var hyperlink = response_text.find('.ap-questions-hyperlink').attr('href');
