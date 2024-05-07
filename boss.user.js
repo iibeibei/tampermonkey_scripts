@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BOSS 直聘 跨境黑名单
 // @namespace    https://github.com/iibeibei
-// @version      0.2.9
+// @version      0.3.1
 // @description  可以在 BOSS 直聘、智联招聘、前程无忧 上 显示 若比邻的 黑名单，应 Facebook 群友要求，分享一下 祝大家早日找到好工作
 // @author       Beibei
 // @license      GPLv3
@@ -38,6 +38,9 @@
 
 // @resource     element-plus    https://unpkg.com/element-plus/dist/index.css
 
+// @note         0.3.1 新加 BOSS直聘 搜索页面添加若比邻黑名单属性标签
+// @note         0.3.0 新加 BOSS直聘 岗位最近编辑时间更换成新版若比邻黑名单最后更新时间
+// @note         0.2.9 移除 BOSS直聘 岗位最近编辑时间失效了，移除相关代码
 // @note         0.2.9 新加 BOSS直聘 刨了小红书tzy大佬的, 添加岗位最近编辑时间
 // @note         0.2.8 修复 BOSS直聘 更新新的若比邻网站
 // @note         0.2.7 修复 BOSS直聘 职位页面错误显示的问题
@@ -77,25 +80,6 @@ waitForKeyElements('.tHCopName > H1', '51job.com', ['/all'], false, false, 'node
 waitForKeyElements('.com_name  > p', '51job.com', ['/'], false, false, 'node.append($(insert_html))', actionFunction);
 
 function actionFunction(node, selector_txt, active_host, active_url, js_code) {
-	if (selector_txt == '.company-info > h3 > a') {
-		parent_ka = node.parent().parent().parent().parent().parent().attr('ka');
-		parent_id = parent_ka.replace('search_list_', '');
-
-		data_list = JSON.parse(boss_joblist_res);
-		job_list = data_list?.zpData?.jobList;
-		job_list.forEach((item) => {
-			const { itemId, lastModifyTime } = item;
-			if (parent_id == itemId) {
-				time = dayjs(lastModifyTime).format('YYYY-MM-DD HH:mm:ss');
-				parent_div = `<div class="__boss_time_tag" style="position: absolute;right: 0;top: 0;background: rgba(229, 248, 248); \
-                color: #00a6a7;padding: 0 8px;font-size: 14px;border-radius: 0 0 0 4px;">编辑: ${time}</div>`;
-				$(`li[ka="${parent_ka}"]`).append($(parent_div));
-			}
-		});
-		// parent_div = `<div class="__zhipin_time_tag" style="position: absolute;right: 0;top: 0;background: #426eff; \
-		// color: white;padding: 0 8px;font-size: 14px;border-radius: 0 0 0 4px;">最近编辑:${time}</div>`;
-	}
-
 	if (GM_getValue('menu_amazon')) {
 		(async () => {
 			var node_class = node.attr('class');
@@ -109,28 +93,40 @@ function actionFunction(node, selector_txt, active_host, active_url, js_code) {
 				// var blacklist_search = `https://kjrate.com/?s=${company_name}&post_type=question`;
 				var response = await makeGetRequest(blacklist_search);
 				var response_text = $(response.responseText);
+
+				// boss直聘的搜索页面添加若比邻黑名单标签
 				var hyperlink = response_text.find('.ap-questions-hyperlink').attr('href');
 				var result = hyperlink == undefined ? ['#00F', blacklist_search, '去搜索一下'] : ['#F00', hyperlink, '若比邻黑名单'];
 				var insert_html = `<a class="beibei" target="_blank" style="color:${result[0]}" href='${result[1]}'>&nbsp ${result[2]} &nbsp</a>`;
 				eval(js_code);
+
+				// boss直聘的搜索页面添加若比邻黑名单的属性标签
+				if (selector_txt == '.company-info > h3 > a') {
+					var tag_list = node.parent().parent().find('ul');
+					var question_tags_list = response_text.find('.question-tags > a');
+					if (question_tags_list.length > 0) {
+						for (var i = 0; i < question_tags_list.length; i++) {
+							question_tags = question_tags_list[i].innerText;
+							question_tags = question_tags.replace(/,/g, '|').replace(/，/g, '|');
+							question_tags = question_tags.trim().replace(/^[|]|^[#]|[|]$/g, '');
+							question_tags = question_tags.replace(/\|/g, '<span style="color: blue">│</span>');
+							tags_html = $(`<li><span style="color: red">${question_tags}</span></li>`);
+							tag_list.prepend(tags_html);
+						}
+					}
+
+					// boss直聘的搜索页面添加若比邻黑名单的历史记录标签
+					post_history_list = response_text.find('.ap-post-history');
+					if (post_history_list.length > 0) {
+						post_history = post_history_list[0].innerText;
+						parent_ka = node.parent().parent().parent().parent().parent().attr('ka');
+						parent_div = `<div style="position: absolute;right: 0;top: 0;background: rgba(229, 248, 248); \
+                        color: #00a6a7;padding: 0 8px;font-size: 12px;border-radius: 0 0 0 4px;">${post_history}</div>`;
+						$(`li[ka="${parent_ka}"]`).append($(parent_div));
+						console.log(post_history);
+					}
+				}
 			}
 		})();
 	}
 }
-
-var boss_joblist_res = '';
-const xhrOpen = XMLHttpRequest.prototype.open;
-XMLHttpRequest.prototype.open = function () {
-	const xhr = this;
-	if (arguments[1].indexOf('wapi/zpgeek/search/joblist.json') > -1) {
-		const getter = Object.getOwnPropertyDescriptor(XMLHttpRequest.prototype, 'responseText').get;
-		Object.defineProperty(xhr, 'responseText', {
-			get: () => {
-				let result = getter.call(xhr);
-				boss_joblist_res = result;
-				return result;
-			},
-		});
-	}
-	return xhrOpen.apply(xhr, arguments);
-};
