@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BOSS 直聘 跨境黑名单
 // @namespace    https://github.com/iibeibei
-// @version      0.3.2
+// @version      0.3.3
 // @description  可以在 BOSS 直聘、智联招聘、前程无忧 上 显示 若比邻的 黑名单，应 Facebook 群友要求，分享一下 祝大家早日找到好工作
 // @author       Beibei
 // @license      GPLv3
@@ -38,7 +38,8 @@
 
 // @resource     element-plus    https://unpkg.com/element-plus/dist/index.css
 
-// @note         0.3.2 新加 BOSS直聘 修复首页不显示黑名单的BUG
+// @note         0.3.3 修复 BOSS直聘 修复首页不显示黑名单标签的BUG
+// @note         0.3.2 修复 BOSS直聘 修复首页不显示黑名单的BUG
 // @note         0.3.1 新加 BOSS直聘 搜索页面添加若比邻黑名单属性标签
 // @note         0.3.0 新加 BOSS直聘 岗位最近编辑时间更换成新版若比邻黑名单最后更新时间
 // @note         0.2.9 移除 BOSS直聘 岗位最近编辑时间失效了，移除相关代码
@@ -102,8 +103,8 @@ function actionFunction(node, selector_txt, active_host, active_url, js_code) {
 				eval(js_code);
 
 				// boss直聘的搜索页面添加若比邻黑名单的属性标签
-				if (selector_txt == '.company-info > h3 > a') {
-					var tag_list = node.parent().parent().find('ul');
+				if (selector_txt == '.boss-name') {
+					var tag_list = node.parent().parent().parent().find('.job-info > .tag-list');
 					var question_tags_list = response_text.find('.question-tags > a');
 					if (question_tags_list.length > 0) {
 						for (var i = 0; i < question_tags_list.length; i++) {
@@ -114,17 +115,6 @@ function actionFunction(node, selector_txt, active_host, active_url, js_code) {
 							tags_html = $(`<li><span style="color: red">${question_tags}</span></li>`);
 							tag_list.prepend(tags_html);
 						}
-					}
-
-					// boss直聘的搜索页面添加若比邻黑名单的历史记录标签
-					post_history_list = response_text.find('.ap-post-history');
-					if (post_history_list.length > 0) {
-						post_history = post_history_list[0].innerText;
-						parent_ka = node.parent().parent().parent().parent().parent().attr('ka');
-						parent_div = `<div style="position: absolute;right: 0;top: 0;background: rgba(229, 248, 248); \
-                        color: #00a6a7;padding: 0 8px;font-size: 12px;border-radius: 0 0 0 4px;">${post_history}</div>`;
-						$(`li[ka="${parent_ka}"]`).append($(parent_div));
-						console.log(post_history);
 					}
 				}
 			}
