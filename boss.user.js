@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BOSS 直聘 跨境黑名单
 // @namespace    https://github.com/iibeibei
-// @version      0.3.1
+// @version      0.3.2
 // @description  可以在 BOSS 直聘、智联招聘、前程无忧 上 显示 若比邻的 黑名单，应 Facebook 群友要求，分享一下 祝大家早日找到好工作
 // @author       Beibei
 // @license      GPLv3
@@ -38,6 +38,7 @@
 
 // @resource     element-plus    https://unpkg.com/element-plus/dist/index.css
 
+// @note         0.3.2 新加 BOSS直聘 修复首页不显示黑名单的BUG
 // @note         0.3.1 新加 BOSS直聘 搜索页面添加若比邻黑名单属性标签
 // @note         0.3.0 新加 BOSS直聘 岗位最近编辑时间更换成新版若比邻黑名单最后更新时间
 // @note         0.2.9 移除 BOSS直聘 岗位最近编辑时间失效了，移除相关代码
@@ -62,7 +63,7 @@ var menu_ALL = [['menu_amazon', 'Amazon', 'Amazon', true]];
 loadMenu(menu_ALL, version_url);
 
 // BOSS 直聘
-waitForKeyElements('.company-info > h3 > a', 'zhipin.com', ['/web/geek'], false, false, 'node.after($(insert_html))', actionFunction);
+waitForKeyElements('.boss-name', 'zhipin.com', ['/web/geek'], false, false, 'node.after($(insert_html))', actionFunction);
 waitForKeyElements('.level-list > .company-name', 'zhipin.com', ['/job_detail'], false, false, 'node.append($(insert_html))', actionFunction);
 waitForKeyElements('a[ka="job-detail-company_custompage"]', 'zhipin.com', ['/job_detail'], false, false, 'node.append($(insert_html))', actionFunction);
 waitForKeyElements('.base-info.fl > span:nth-child(2)', 'zhipin.com', ['/web/geek'], false, false, 'node.append($(insert_html))', actionFunction);
